@@ -1,6 +1,7 @@
 <?php
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\http\Controllers\UserController;
 use App\http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,12 +18,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/products', function () {
     return Product::all();
 });
+Route::post('/register', [UserController::class,'register']);
 Route::get('/category', function () {
     return Product::select('category')->get();
 });
-Route::post('/Addproducts',[ProductController::class,'store']);
-Route::put('/products/{id}',[ProductController::class, 'update']);
-Route::get('Product/{id}', [ProductController::class, 'show']);
+Route::middleware(['auth:sanctum'])->group(function () {
+Route::post('/Addproduct',[ProductController::class,'store']);
+Route::put('/product/{id}',[ProductController::class, 'update']);
+Route::delete('product/{id}', [ProductController::class,'destroy']);
+});
+
+Route::get('product/{id}', [ProductController::class, 'show']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -40,5 +40,11 @@ class User extends Authenticatable
             $user->password = bcrypt('default-password');
         });
     }
+    public function generateApiToken()
+{
+    $this->api_token = hash('sha256', Str::random(60));
+    $this->save();
+}
+
 
 }

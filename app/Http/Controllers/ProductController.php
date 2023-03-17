@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\http\Requests\CreateProductRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -116,8 +117,23 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        try{
+              $product = Product::Findorfail($id);
+              $product->delete();
+              return response()->json([
+                "message" => "Product deleted "
+              ]
+
+                  , 200);
+           }catch(ModelNotFoundException $e){
+            return response()->json([
+                "message" => "product not found"
+            ], 404);
+
+           }
+
+
     }
 }
