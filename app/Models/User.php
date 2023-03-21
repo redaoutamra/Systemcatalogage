@@ -36,9 +36,7 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::creating(function ($user) {
-            $user->password = bcrypt('default-password');
-        });
+
     }
     public function generateApiToken()
 {

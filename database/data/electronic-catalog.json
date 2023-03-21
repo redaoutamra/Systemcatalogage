@@ -32,11 +32,13 @@
     "users": [
       {
         "name": "Mohammed KARIM",
-        "email": "mohammed@mail.com"
+        "email": "mohammed@mail.com",
+        "password": "pass12345"
       },
       {
         "name": "Haytam SADIK",
-        "email": "haytam@mail.com"
+        "email": "haytam@mail.com",
+        "password": "pass54321"
       }
     ]
   }

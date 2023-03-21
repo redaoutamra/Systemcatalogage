@@ -29,7 +29,7 @@ Route::delete('product/{id}', [ProductController::class,'destroy']);
 });
 
 Route::get('product/{id}', [ProductController::class, 'show']);
-
+Route::post('/login',[UserController::class,'index']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
