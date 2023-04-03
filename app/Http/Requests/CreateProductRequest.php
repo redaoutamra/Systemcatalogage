@@ -31,4 +31,12 @@ class CreateProductRequest extends FormRequest
             'quantity' => 'required |integer|min:1'
         ];
     }
+    public function failedValidation(Validator $validator){
+        throw new HttpResponseException(response()->json([
+            'success' => false ,
+            'message' => 'validation error' ,
+            'data' => $validator->errors()
+        ]));
+
+    }
 }

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\http\Requests\CreateProductRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Resources\ProductResource;
 use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
@@ -135,5 +137,27 @@ class ProductController extends Controller
            }
 
 
+    }
+    /**
+     * @OA\Get(
+     *      path="/api/category",
+     *      operationId="getCategoryList",
+     *      tags={"Categories"},
+     *      summary="Get list of categories",
+     *      description="Returns list of categories",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       )
+     *     )
+     *
+     *
+     * Returns list of categories
+     */
+    public function getCategories()
+    {
+          $categories = Product::pluck('category');
+          return response()->json($categories, 200);
+        // return ProductResource::collection(Product::pluck('category'));
     }
 }
