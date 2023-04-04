@@ -15,10 +15,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/products', function () {
-    return Product::all();
-});
-
+Route::get('/products', [ProductController::Class,'getProducts']);
 Route::get('/category',[ProductController::class,'getCategories']);
 Route::middleware(['auth:sanctum'])->group(function () {
 Route::post('/Addproduct',[ProductController::class,'store']);

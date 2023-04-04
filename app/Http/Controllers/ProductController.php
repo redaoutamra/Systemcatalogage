@@ -6,6 +6,8 @@ use App\Models\Product;
 use App\http\Requests\CreateProductRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductsCollection;
+use App\Http\Resources\CategoryResources;
 use Illuminate\Http\Request;
 
 
@@ -63,18 +65,15 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
-        if(!$product){
-            return  response()->json([
-                'message' => "the product you chosed dosen't exist" ],404
-            );
+        try{
+        return new ProductResource(Product::findorFail($id));
+        }catch(ModelNotFoundException $e){
+            return response()->json(['No product is on that has this id ' => $id],404);
         }
-        return response()->json([
-            'data' => $product ,
-            'message' => 'product found'
-        ],200);
     }
-
+    public function getProducts(){
+        return ProductsCollection::Collection(Product::all());
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -152,12 +151,10 @@ class ProductController extends Controller
      *     )
      *
      *
-     * Returns list of categories
+     * Returns list
      */
     public function getCategories()
     {
-          $categories = Product::pluck('category');
-          return response()->json($categories, 200);
-        // return ProductResource::collection(Product::pluck('category'));
+         return CategoryResources::collection(Product::all());
     }
 }

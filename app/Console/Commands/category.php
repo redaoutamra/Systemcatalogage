@@ -34,7 +34,7 @@ class category extends Command
     public function handle()
     {
 
-        $categories = Product::pluck('category');
+        $categories = Product::all();
         dd($categories);
         return CategoryResources::Collection($categories);
 
